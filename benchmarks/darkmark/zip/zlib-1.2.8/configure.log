@@ -1,0 +1,169 @@
+--------------------
+./configure
+Mon, Jul 08, 2013 11:28:58 AM
+Checking for gcc...
+=== ztest7296.c ===
+extern int getchar();
+int hello() {return getchar();}
+===
+gcc -c ztest7296.c
+... using gcc
+
+Checking for obsessive-compulsive compiler options...
+=== ztest7296.c ===
+int foo() { return 0; }
+===
+gcc -c -O3 ztest7296.c
+
+Checking for shared library support...
+=== ztest7296.c ===
+extern int getchar();
+int hello() {return getchar();}
+===
+gcc -w -c -O3 -fPIC ztest7296.c
+-O3 -fPIC -o ztest7296.so ztest7296.o
+./configure: line 343: -O3: command not found
+(exit code 127)
+No shared library support.
+Building static library libz.a version 1.2.8 with gcc.
+
+=== ztest7296.c ===
+#include <sys/types.h>
+off64_t dummy = 0;
+===
+gcc -c -O3 -D_LARGEFILE64_SOURCE=1 ztest7296.c
+ztest7296.c:2:1: error: unknown type name ‘off64_t’
+(exit code 1)
+Checking for off64_t... No.
+
+=== ztest7296.c ===
+#include <stdio.h>
+int main(void) {
+  fseeko(NULL, 0, 0);
+  return 0;
+}
+===
+gcc -O3 -o ztest7296 ztest7296.c
+Checking for fseeko... Yes.
+
+=== ztest7296.c ===
+#include <string.h>
+#include <errno.h>
+int main() { return strlen(strerror(errno)); }
+===
+gcc -O3 -o ztest7296 ztest7296.c
+Checking for strerror... Yes.
+
+=== ztest7296.c ===
+#include <unistd.h>
+int main() { return 0; }
+===
+gcc -c -O3 ztest7296.c
+Checking for unistd.h... Yes.
+
+=== ztest7296.c ===
+#include <stdarg.h>
+int main() { return 0; }
+===
+gcc -c -O3 ztest7296.c
+Checking for stdarg.h... Yes.
+
+=== ztest7296.c ===
+#include <stdio.h>
+#include <stdarg.h>
+#include "zconf.h"
+int main()
+{
+#ifndef STDC
+  choke me
+#endif
+  return 0;
+}
+===
+gcc -c -O3 ztest7296.c
+Checking whether to use vs[n]printf() or s[n]printf()... using vs[n]printf().
+
+=== ztest7296.c ===
+#include <stdio.h>
+#include <stdarg.h>
+int mytest(const char *fmt, ...)
+{
+  char buf[20];
+  va_list ap;
+  va_start(ap, fmt);
+  vsnprintf(buf, sizeof(buf), fmt, ap);
+  va_end(ap);
+  return 0;
+}
+int main()
+{
+  return (mytest("Hello%d\n", 1));
+}
+===
+gcc -O3 -o ztest7296 ztest7296.c
+Checking for vsnprintf() in stdio.h... Yes.
+
+=== ztest7296.c ===
+#include <stdio.h>
+#include <stdarg.h>
+int mytest(const char *fmt, ...)
+{
+  int n;
+  char buf[20];
+  va_list ap;
+  va_start(ap, fmt);
+  n = vsnprintf(buf, sizeof(buf), fmt, ap);
+  va_end(ap);
+  return n;
+}
+int main()
+{
+  return (mytest("Hello%d\n", 1));
+}
+===
+gcc -c -O3 ztest7296.c
+Checking for return value of vsnprintf()... Yes.
+
+=== ztest7296.c ===
+#define ZLIB_INTERNAL __attribute__((visibility ("hidden")))
+int ZLIB_INTERNAL foo;
+int main()
+{
+  return 0;
+}
+===
+gcc -c -O3 ztest7296.c
+ztest7296.c:6:1: warning: visibility attribute not supported in this configuration; ignored [-Wattributes]Checking for attribute(visibility) support... No.
+
+ALL = static
+AR = ar
+ARFLAGS = rc
+CC = gcc
+CFLAGS = -O3
+CPP = gcc -E
+EXE = .exe
+LDCONFIG = ldconfig
+LDFLAGS =
+LDSHARED = gcc
+LDSHAREDLIBC = -lc
+OBJC = $(OBJZ) $(OBJG)
+PIC_OBJC = $(PIC_OBJZ) $(PIC_OBJG)
+RANLIB = ranlib
+SFLAGS = -O3 -fPIC
+SHAREDLIB =
+SHAREDLIBM =
+SHAREDLIBV =
+STATICLIB = libz.a
+TEST = all teststatic
+VER = 1.2.8
+Z_U4 =
+exec_prefix = ${prefix}
+includedir = ${prefix}/include
+libdir = ${exec_prefix}/lib
+mandir = ${prefix}/share/man
+prefix = /usr/local
+sharedlibdir = ${libdir}
+uname = CYGWIN_NT-6.1-WOW64
+--------------------
+
+

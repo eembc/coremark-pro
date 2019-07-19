@@ -1,0 +1,34 @@
+sync1-kernels = \
+	empty chains/chaintest chains/scjpeg chains/scmyk chains/sdempeg chains/sdjpeg chains/sfft chains/srotate \
+	chains/util/sfiles chains/util/packetize chains/util/common chains/util/depacketize chains/*.h \
+	networking/ipres/ip_reassembly_v4.h \
+	oa/rotatev2 filters_v2/rgbcmyk03 filters_v2/common automotive/aifftr01 \
+	video/mp2decode consumer_v2/cjpeg consumer_v2/djpeg \
+	video/x264 chains/sx264
+
+sync1-data = \
+	video/libmpeg/zoom.mpeg \
+	video/libmpeg/marsface.mpeg \
+	video/libmpeg/graphic.mpeg \
+	streams/1port_packets-images.stream \
+	streams/4port_packets-images.stream \
+	libbmp/hall.bmp \
+	libbmp/window.bmp \
+	libbmp/door.bmp \
+	libjpeg/hall.jpg \
+	libjpeg/window.jpg \
+	libjpeg/door.jpg
+
+sync1-contexts =  \
+	empty-wld \
+	sync_print_1 \
+	sync_print_4 \
+	sync_secure_1 \
+	settop_scenario_1
+
+sync1 = $(sync1-contexts)
+	
+sync1-dirs = $(addprefix benchmarks/,$(sync1-kernels)) $(addprefix benchmarks/,$(sync1-data)) $(addprefix workloads/,$(sync1)) 
+
+SET_DEFS+= sync1 
+SET_DESC_sync1=Workloads demonstrating functional decomposition

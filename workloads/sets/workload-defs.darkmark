@@ -1,0 +1,24 @@
+darkmark-kernels = \
+	empty darkmark/parser darkmark/script darkmark/voice
+
+darkmark-data = \
+	darkmark/voice/ogg/*.ogg
+
+darkmark-wld =  \
+	parser-test \
+	parser-50k \
+	parser-500k \
+	voice-test \
+	voice-celtic \
+	script-test \
+	script-5k \
+	script-50k \
+	script-500k 
+	
+
+darkmark = $(darkmark-wld)
+	
+darkmark-dirs = $(addprefix benchmarks/,$(darkmark-kernels)) $(addprefix benchmarks/,$(darkmark-data)) $(addprefix workloads/,$(darkmark)) 
+
+SET_DEFS+= darkmark 
+SET_DESC_darkmark=Workloads for consideration of the darkmark working group

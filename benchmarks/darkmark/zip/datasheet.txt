@@ -1,0 +1,28 @@
+File: ZIP
+=============
+	Run zip compression
+
+Description:
+=============
+The benchmark implements zip compression using the zlib library configured in a specific way.
+
+Application:
+=============
+Compression
+
+Detailed Description:
+=============
+zlib's compression method, an LZ77 variant called deflation, 
+emits compressed data as a sequence of blocks.
+Repeated calls to a function that finds a match (longest_match) 
+implement the search for repeating patterns, 
+and huffman encoding is performed after determining the patterns to use.
+The decode tree is encoded as part of the data.
+The default data being used is highly compressible text representing XML input.
+
+For more information about zlib see http://www.zlib.net .
+
+Verification:
+=============
+Length of the compressed output is verified. 
+

@@ -1,0 +1,9 @@
+connect '/f=target.ini'
+getenv 'LOGNAME' LOGNAME
+getenv 'TARGET_COMMAND' TARGET_COMMAND
+logopen LOGNAME 1 0
+sendln TARGET_COMMAND
+wait 'Done:'
+pause 1
+logclose
+closett

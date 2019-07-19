@@ -1,0 +1,4 @@
+Release notes for CoreMark-PRO suite.
+
+1.1.2743
+  - icc.mak now supports RESTRICT and gnu99

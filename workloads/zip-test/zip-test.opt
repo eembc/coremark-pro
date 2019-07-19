@@ -1,0 +1,20 @@
+#Use this file to override specific run options for this workload
+
+#Uncomment below to override the RUN_FLAGS to change invocation of the workload binary for this workload only.
+WLD_RUN_FLAGS=$(RUN_FLAGS)
+
+#Override the command line flags such as number of iterations here (e.g. add -i100 to set iterations on this workload to 100)
+#For certification, you MUST use the BEST_CONCURRENCY flag to define -w and -c parameters for best performance.
+ifeq ($(CONCURRNCY),single)
+override WLD_CMD_FLAGS=
+else
+override WLD_CMD_FLAGS=
+endif
+
+#It is possible to change the parameters for best concurrency on a per workload basis.
+#E.g. -c7 (or -w7 for workloads where the number of workers may be changed)
+#override BEST_CONCURRENCY=
+
+#Normally the actual run command should not be modified, only the flags to the command.
+#If the actual RUN command needs to be modified, please provide documentation explaining why this is necessary.
+WLD_RUN=$(RUN)

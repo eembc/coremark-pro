@@ -1,0 +1,16 @@
+File: FFT R2
+Description:
+This benchmark performs FFT with Radix2 on the input.
+
+Application:
+Part of the FPMark floating point suite.
+
+Detailed Description:
+This function performs a generic FFT decimation in time using radix 2 over the input.
+The twiddle factors can be calculated using the sine function in the outer loop, or precomputed.
+Use the C define TWIDDLES_ON_THE_FLY to force twiddle compute on the fly to reduce the memory footprint.
+A single pass is used to bitreverse the input data before FFT processing starts. 
+
+Verification:
+Verification is done based on ieee compliant run of ICC on a 64b linux machine with optimizations disabled, -fp-model precise -no-fast-transcendentals.
+

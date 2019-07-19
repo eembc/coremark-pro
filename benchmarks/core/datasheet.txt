@@ -1,0 +1,57 @@
+File: CORE
+==========
+	A benchmark derived from CoreMark with different datasets and a modified CRC algorithm.
+
+Description:
+============
+The original CoreMark was specifically built for portability 
+and to provide support for very small processors.
+In the context of CoreMark-HPC, we have changed the CRC algorithm and the dataset,
+to be a better fit for application processors.
+
+Application:
+============
+Basic programming.
+
+Detailed Description:
+=====================
+The CORE kernel is composed of several sub kernels that focus on basic data structures.
+
+List processing - Lists commonly exercise pointers, and are also characterized by 
+memory access patterns that are not serial. In terms of testing the core of a CPU, 
+list processing mostly tests how fast data can be used (to scan through the list), 
+and for lists larger than the available cache, 
+can also test the efficiency of cache and memory hierarchy. 
+List processing consists of reversing, 
+searching or sorting the list according to different parameters, 
+based on the contents of the list data items. 
+Lists can be constrained to specific memory blocks managed by the programmer. 
+The CORE kernel uses this approach, as it avoids calls to library code (malloc/free).
+
+Matrix processing - Matrixes and arrays are commonly used in many algorithms. 
+Algorithms using matrixes are composed of tight loops iterating over the whole matrix. 
+A lot of research has gone into optimizing this type of processing, 
+precisely because it is so common. 
+The CORE kernel performs simple operations on the input matrixes, 
+including multiplication with a constant, a vector or another matrix. 
+It also tests operating on part of the data in the matrix 
+in the form of extracting bits from each matrix item for operations. 
+To validate that all operations have been performed, 
+the matrix is being tested after each operation, and a single final output value computed using CRC.
+Efficiency of tight loop operations is tested with this algorithm, 
+as well as the ability of the machine and toolchain to use ISA accelerators 
+such as MAC units and SIMD instructions.
+
+State machine processing - An important part of a CPU core is the ability 
+to handle control statements other than loops. 
+A state machine based on switch or if statements is an ideal candidate for testing that capability. 
+The state machine tests an input string to detect if the input is a number. 
+This is a simple state machine with 9 states. 
+The entire input buffer is scanned with this state machine. 
+
+
+Verification:
+=============
+CRC of each computed output is tested against a reference. Results must be bit exact.
+The CRC is computed using a small (256 bytes) hash table.
+

@@ -1,0 +1,18 @@
+File: Neural Net
+Description:
+Use a neural net to evaluate patterns.
+
+Application:
+Part of the FPMark floating point suite.
+
+Detailed Description:
+This benchmark uses a neural net to evaluate patterns. 
+The net is initialized with 10% or 90% for each input bit in the pattern, 
+and 0% or 100% for the required output based on the input patterns.
+During the benchmark, the neurodes are initialized to pseudo random values,
+and the neural net is allowed to run until it is stable.
+
+Verification:
+Verification is done based on IEEE-compliant run of ICC on a 64b linux machine with optimizations disabled, 
+-fp-model precise -no-fast-transcendentals.
+

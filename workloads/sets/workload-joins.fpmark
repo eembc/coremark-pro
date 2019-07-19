@@ -1,0 +1,28 @@
+# fpmark workload set is the fp suite v1, and is composed of the sp1 single precision and dp1 double precision workloads.
+# The kernels are the same for both workloads, so kernels list is copied from dp1
+fpmark-kernels = $(dp1-kernels)
+fpmark-data = $(dp1-data) $(sp1-data)
+fpmark = $(dp1) $(sp1)
+fpmark-dirs = $(addprefix benchmarks/,$(fpmark-kernels)) $(addprefix benchmarks/,$(fpmark-data)) $(addprefix workloads/,$(fpmark)) 
+
+kernel_docs-fpmark = $(addprefix -i benchmarks/,$(fpmark-kernels))
+workload_docs-fpmark = $(addprefix -i workloads/,$(fpmark)) 
+DOCFILES-fpmark = docs/html/fpmark docs/html/char-fpmark $(DOCFILES_base)
+
+SET_DEFS+= fpmark 
+SET_DESC_fpmark=All FPBench workloads
+TAGBASE-fpmark = fpbench_
+
+ifdef DIR_IMG
+# Add target to create convenient links for packaging suite binaries and run script
+
+.PHONY: shell-fpbench
+shell-fpbench: shell-list-fpmark
+	rm -rf fpbench_$(TARGET)_$(TOOLCHAIN)
+	mkdir fpbench_$(TARGET)_$(TOOLCHAIN)
+	ln -sf $(DIR_IMG)/run-fpmark.sh fpbench_$(TARGET)_$(TOOLCHAIN)/fpbench
+	ln -sf $(DIR_IMG) fpbench_$(TARGET)_$(TOOLCHAIN)/bin
+	ln -sf BENCHMARK_LICENSE_AGREEMENT_12_21_2007.pdf fpbench_$(TARGET)_$(TOOLCHAIN)/BENCHMARK_LICENSE_AGREEMENT_12_21_2007.pdf
+
+endif
+	

@@ -1,0 +1,65 @@
+multibench-kernels = \
+	empty \
+	networking/ippktcheck \
+	networking/ipres \
+	networking/tcp \
+	md5 \
+	oa/rotatev2 \
+	filters_v2/rgbcmyk03 filters_v2/common \
+	video/x264 \
+	automotive/idctrn01/*.[ch] automotive/idctrn01/Makefile 
+
+multibench-data = \
+	libppm/sea-acorn-mini.ppm \
+	libppm/Rose256.ppm \
+	libppm/Mandrake.ppm \
+	libpgm/barn.pgm \
+	libpgm/DragonFly.pgm \
+	libpgm/Rose256.pgm \
+	video/x264data/quadmars* \
+	video/x264data/input* \
+	automotive/idctrn01/data*/data4M \
+	automotive/idctrn01/data*/data1 
+
+multibench-workers = \
+	ippktcheck-4M \
+	ipres-4M \
+	md5-4M \
+	rgbcmyk-4M \
+	rotate-4Ms1 \
+	rotate-4Ms64 \
+	x264-4Mq \
+	iDCT-4M
+
+multibench-contexts =  \
+	empty-wld \
+	4M-check-reassembly \
+	4M-check-reassembly-tcp \
+	4M-check-reassembly-tcp-cmykw2-rotatew2 \
+	4M-check-reassembly-tcp-x264w2 \
+	4M-cmykw2-rotatew2 \
+	4M-rotatew2 \
+	4M-cmykw2 \
+	4M-tcp-mixed \
+	4M-x264w2 \
+	4M-reassembly \
+	4M-check \
+	ippktcheck-4Mw1 \
+	ipres-4Mw1 \
+	md5-4Mw1 \
+	rgbcmyk-4Mw1 \
+	rotate-4Ms1w1 \
+	rotate-4Ms64w1 \
+	x264-4Mqw1 \
+	iDCT-4Mw1
+
+multibench =	$(multibench-workers) $(multibench-contexts)
+	
+multibench-dirs = $(addprefix benchmarks/,$(multibench-kernels)) $(addprefix benchmarks/,$(multibench-data)) $(addprefix workloads/,$(multibench)) 
+
+multibench-image = $(filter rotate% rgbcmyk%,$(multibench))
+multibench-net = $(filter md5% ipres%,$(multibench))
+multibench-h264 = $(filter 64M-x264%,$(multibench))
+
+SET_DEFS+= multibench 
+SET_DESC_multibench=MultiBench V1 official workloads

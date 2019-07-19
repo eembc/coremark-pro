@@ -1,0 +1,75 @@
+dp1-kernels = \
+	fp/FC_xp1px \
+	fp/fft_radix2 \
+	fp/linpack \
+	fp/nnet \
+	fp/horner \
+	fp/blacks \
+	fp/lu \
+	fp/loops \
+	fp/ray \
+	fp/atan
+	
+dp1-data = \
+	fp/FC_xp1px/ref/*.c \
+	fp/fft_radix2/ref/*.c \
+	fp/linpack/ref/*.c \
+	fp/nnet/ref/*.c \
+	fp/horner/ref/*.c \
+	fp/blacks/ref/*.c \
+	fp/lu/ref/*.c \
+	fp/loops/ref/*.c \
+	fp/ray/ref/*.c \
+	fp/atan/ref/*.c \
+	automotive/matrix01/bmark_lite_789.c automotive/matrix01/algo_789.h \
+	automotive/basefp01/bmark_lite_795.c automotive/basefp01/algo_795.h \
+	fp/preset/*.c fp/preset/SP fp/preset/Makefile
+
+fp1-sml-dp = \
+	blacks-sml-n500v20 \
+	horner-sml-1k \
+	linear_alg-sml-50x50 \
+	loops-all-tiny \
+	lu-sml-20x2_50 \
+	radix2-sml-2k \
+	xp1px-sml-c100n20 \
+	ray-64x48at4s \
+	atan-1k \
+	nnet_data1 \
+	inner-product-sml-1k
+
+fp1-mid-dp = \
+	blacks-mid-n1000v40 \
+	horner-mid-10k \
+	linear_alg-mid-100x100 \
+	loops-all-mid-10k \
+	inner-product-mid-10k \
+	lu-mid-200x2_50 \
+	radix2-mid-8k \
+	xp1px-mid-c1000n200 \
+	ray-320x240at8s \
+	atan-64k \
+	nnet_test 
+
+fp1-big-dp = \
+	blacks-big-n5000v200 \
+	horner-big-100k \
+	linear_alg-big-1000x1000 \
+	loops-all-big-100k \
+	inner-product-big-100k \
+	lu-big-2000x2_50 \
+	radix2-big-64k \
+	xp1px-big-c10000n2000 \
+	ray-1024x768at24s \
+	atan-1M 
+	
+	
+dp1 = $(fp1-sml-dp) $(fp1-mid-dp) $(fp1-big-dp) 
+	
+dp1-dirs = $(addprefix benchmarks/,$(dp1-kernels)) $(addprefix benchmarks/,$(dp1-data)) $(addprefix workloads/,$(dp1)) 
+kernel_docs-dp1 = $(addprefix -i benchmarks/,$(dp1-kernels))
+workload_docs-dp1 = $(addprefix -i workloads/,$(dp1)) 
+DOCFILES-dp1 = docs/html/dp1 $(DOCFILES_base)
+
+SET_DEFS+= dp1 
+SET_DESC_dp1=FPBench double precision workloads

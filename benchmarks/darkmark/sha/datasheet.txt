@@ -1,0 +1,29 @@
+File: SHA256
+	SHA256 hashing
+
+Description:
+The benchmark implements the SHA256 algorithm
+
+Application:
+Message digest, signing etc.
+
+Detailed Description:
+SHA-256 is a subset of cryptographic hash functions 
+(SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256) 
+designed by the U.S. National Security Agency (NSA) 
+and published in 2001 by the NIST as a U.S. Federal Information Processing Standard (FIPS). 
+SHA stands for Secure Hash Algorithm. 
+
+The algorithm consists of is a hash functions with digests of 256 bits.
+
+SHA-256 is a novel hash functions computed with 32-bit words. 
+The SHA-2 family of algorithms are patented in US 6829355. 
+The United States has released the patent under a royalty-free license.
+
+The kernel is insensitive to the content input data, 
+and the compute is directly proportional to the length of the input.
+The workload repeats a long sequence of serial code with few branches on each input block.
+
+Verification:
+Precalculated digest results are used as reference. Results must be bit exact.
+

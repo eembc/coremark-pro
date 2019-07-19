@@ -1,0 +1,57 @@
+//math
+convert log th_ln
+convert pow th_pow
+convert isfinite th_isfinite
+convert fabs th_fabs
+convert exp th_exp
+convert sqrt th_sqrt
+convert cos th_cos
+convert sin th_sin
+convert tan th_tan
+convert tan th_atan
+convert cosh th_cosh
+convert sinh th_sinh
+convert tanh th_tanh
+convert atoi th_atoi
+convert atof th_atof
+//stdio
+convert sscanf th_sscanf
+convert fprintf th_fprintf
+convert printf th_printf
+convert vfprintf th_vfprintf
+convert fopen th_fopen
+convert fseek th_fseek
+convert ftell th_ftell
+convert fread th_fread
+convert fstat th_fstat
+convert fclose th_fclose
+convert sprintf th_sprintf
+convert snprintf th_snprintf
+convert strdup th_strdup
+convert rename th_rename
+convert stdio th_stdio
+convert stdin th_stdin
+convert stderr th_stderr
+//stdlib
+convert abs th_abs
+convert strtol th_strtol
+convert strtod th_strtod
+convert free th_free
+convert malloc th_malloc
+convert realloc th_realloc
+convert exit(a) th_exit(a,"")
+//string
+convert memcpy th_memcpy
+convert memmove th_memmove
+convert memset th_memset
+convert strcat th_strcat
+convert strcpy th_strcpy
+convert strncpy th_strncpy
+convert strcmp th_strcmp
+convert strchr th_strchr
+convert strncmp th_strncmp
+convert strstr th_strstr
+convert memcmp th_memcmp
+convert strlen th_strlen
+convert strpbrk th_strpbrk
+convert strcspn th_strcspn

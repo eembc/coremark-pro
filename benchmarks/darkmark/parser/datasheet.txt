@@ -1,0 +1,38 @@
+File: XML
+	Parse an XML file
+
+Description:
+The benchmark implements an XML parser, and performs simple validation on the output.
+
+Application:
+Communications, database, etc.
+
+Detailed Description:
+The kernel parses an XML string.
+Given a string of xml data and its length, parses it and creates an ezxml
+structure. For efficiency, modifies the data by adding null terminators
+and decoding ampersand sequences. 
+The default dataset contains records of the form:
+(start code) 
+    <p company='EEMBC'>
+      <b>Shay Gal-On</b>
+      <data>42</data>
+    </p>
+(end code)
+All memory required for XML tree nodes is allocated at run time as new keys and attributes are being parsed.
+After the input is parsed and an XML tree created, the kernel searches through the resulting tree.
+Different keys and attributes are being processed and a hash of the results is calculated.
+In case of a known input, the hash will be compared against a known reference value for validation.
+
+This kernel tests creation and manipulation of a tree data structure. 
+Note: The kernel is very dataset dependent. 
+For example, long strings for <b> keys and attributes can shift the focus of the code 
+from data structure manipulation to string manipulation. 
+Similarly, long strings for the <data> keys can shift the focus of the code to the hashing used.
+Default data sets all limit the size of the strings and use just a few key types
+to make sure the focus of the kernel is on the creation and traversal of the data structure.
+
+Verification:
+Content of the file is fields with specific structure. 
+CRC of specific attributes of specific keys is calculated and compared to known reference. 
+Results must be bit exact.

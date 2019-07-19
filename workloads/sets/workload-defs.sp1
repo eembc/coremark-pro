@@ -1,0 +1,61 @@
+sp1-kernels = \
+	fp/linpack \
+	fp/nnet \
+	fp/horner \
+	fp/blacks \
+	fp/lu \
+	fp/loops \
+	fp/atan
+	
+sp1-data = \
+	fp/linpack/ref/*.c \
+	fp/nnet/ref-sp/*.c \
+	fp/horner/ref-sp/*.c \
+	fp/blacks/ref-sp/*.c \
+	fp/lu/ref-sp/*.c \
+	fp/loops/ref-sp/*.c \
+	fp/atan/ref-sp/*.c \
+	automotive/matrix01/bmark_lite_789.c automotive/matrix01/algo_789.h \
+	automotive/basefp01/bmark_lite_795.c automotive/basefp01/algo_795.h \
+	fp/preset/*.c fp/preset/SP fp/preset/Makefile
+
+fp1-sml-sp = \
+	blacks-sml-n500v20-sp \
+	horner-sml-1k-sp \
+	linear_alg-sml-50x50-sp \
+	loops-all-tiny-sp \
+	lu-sml-20x2_50-sp \
+	atan-1k-sp \
+	nnet-data1-sp \
+	inner-product-sml-1k-sp
+
+fp1-mid-sp = \
+	blacks-mid-n1000v40-sp \
+	horner-mid-10k-sp \
+	linear_alg-mid-100x100-sp \
+	loops-all-mid-10k-sp \
+	inner-product-mid-10k-sp \
+	lu-mid-200x2_50-sp \
+	atan-64k-sp \
+	nnet_test-sp 
+
+fp1-big-sp = \
+	blacks-big-n5000v200-sp \
+	horner-big-100k-sp \
+	linear_alg-big-1000x1000-sp \
+	loops-all-big-100k-sp \
+	inner-product-big-100k-sp \
+	lu-big-2000x2_50-sp \
+	atan-1M-sp 
+	
+sp1 = $(fp1-sml-sp) $(fp1-mid-sp) $(fp1-big-sp) 
+	
+sp1-dirs = $(addprefix benchmarks/,$(sp1-kernels)) $(addprefix benchmarks/,$(sp1-data)) $(addprefix workloads/,$(sp1)) 
+kernel_docs-sp1 = $(addprefix -i benchmarks/,$(sp1-kernels))
+workload_docs-sp1 = $(addprefix -i workloads/,$(sp1)) 
+DOCFILES-sp1 = docs/html/sp1 $(DOCFILES_base)
+
+SET_DEFS+= sp1 
+SET_DESC_sp1=FPBench single precision workloads
+
+microfpmark: run-list-fp1-sml-sp mark

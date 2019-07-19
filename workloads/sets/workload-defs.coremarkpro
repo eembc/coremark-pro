@@ -1,0 +1,51 @@
+coremarkpro-kernels = \
+	consumer_v2/cjpeg \
+	darkmark/parser \
+	darkmark/sha \
+	darkmark/zip \
+	fp/fft_radix2 \
+	fp/linpack \
+	fp/loops \
+	fp/nnet	fp/preset \
+	core
+	
+
+coremarkpro-data = \
+	libjpeg/Rose256.jpg libbmp/Rose256.bmp
+	
+coremarkpro-wld =  \
+	cjpeg-rose7-preset \
+	linear_alg-mid-100x100-sp \
+	loops-all-mid-10k-sp \
+	nnet_test \
+	parser-125k \
+	radix2-big-64k \
+	sha-test \
+	zip-test \
+	core
+	
+
+coremarkpro = $(coremarkpro-wld)
+coremarkpro-contexts = $(coremarkpro)
+	
+coremarkpro-dirs = $(addprefix benchmarks/,$(coremarkpro-kernels)) $(addprefix benchmarks/,$(coremarkpro-data)) $(addprefix workloads/,$(coremarkpro)) 
+
+SET_DEFS+= coremarkpro 
+SET_DESC_coremarkpro=CoreMark-PRO workloads
+
+kernel_docs-coremarkpro = $(addprefix -i benchmarks/,$(coremarkpro-kernels))
+workload_docs-coremarkpro = $(addprefix -i workloads/,$(coremarkpro)) 
+DOCFILES-coremarkpro = docs/html/coremarkpro docs/html/char-coremarkpro docs/index.html docs/CoreMark-PRO_license.pdf $(DOCFILES_base)
+TAGBASE-coremarkpro = coremark-pro_
+
+pro=$(coremarkpro)
+pro-contexts = $(pro)
+pro-dirs=$(coremarkpro-dirs)
+SET_DEFS+= pro 
+SET_DESC_pro=$(SET_DESC_coremarkpro)
+kernel_docs-pro = $(kernel_docs-coremarkpro)
+workload_docs-pro = $(workload_docs-coremarkpro) 
+DOCFILES-pro = docs/html/pro docs/html/char-pro docs/index.html docs/CoreMark-PRO_license.pdf readme.html $(DOCFILES_base)
+TAGBASE-pro = $(TAGBASE-coremarkpro)
+
+CoremarkPRO: certify-list-pro mark

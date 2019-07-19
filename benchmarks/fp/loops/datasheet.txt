@@ -1,0 +1,20 @@
+File: Loops
+	Variety of kernels based on Livermore loops
+	
+Description:
+The benchmark will perform one or more kernel loops from the list.
+
+Application:
+Part of the FPMark floating point suite.
+
+Detailed Description:
+The Livermore loops benchmark was adapted to this EEMBC benchmark.
+Each kernel was put into a different function, and made to work with parameterizable input size.
+The various kernels in this benchmark were also modified 
+to avoid the compiler being able to compute the results at compile time. 
+
+Verification:
+Verification of the output is done vs results computed on a reference platform, 
+and a required accuracy in bits in the floating point representation is maintained.
+
+

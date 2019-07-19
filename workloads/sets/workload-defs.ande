@@ -1,0 +1,51 @@
+ande-kernels = \
+	consumer_v2/cjpeg \
+	darkmark/parser \
+	darkmark/sha \
+	darkmark/zip \
+	fp/fft_radix2 \
+	fp/linpack \
+	fp/loops \
+	fp/nnet	fp/preset \
+	core
+	
+
+ande-data = \
+	libjpeg/Rose256.jpg libbmp/Rose256.bmp
+	
+ande-wld =  \
+	cjpeg-rose7-preset \
+	linear_alg-mid-100x100-sp \
+	loops-all-mid-10k-sp \
+	nnet_test \
+	parser-125k \
+	radix2-big-64k \
+	sha-test \
+	zip-test \
+	core
+	
+
+ande = $(ande-wld)
+ande-contexts = $(ande)
+	
+ande-dirs = $(addprefix benchmarks/,$(ande-kernels)) $(addprefix benchmarks/,$(ande-data)) $(addprefix workloads/,$(ande)) 
+
+SET_DEFS+= ande 
+SET_DESC_ande=CoreMark-PRO workloads
+
+kernel_docs-ande = $(addprefix -i benchmarks/,$(ande-kernels))
+workload_docs-ande = $(addprefix -i workloads/,$(ande)) 
+DOCFILES-ande = docs/html/ande docs/html/char-ande docs/index.html docs/CoreMark-PRO_license.pdf $(DOCFILES_base)
+TAGBASE-ande = coremark-pro_
+
+pro=$(ande)
+pro-contexts = $(pro)
+pro-dirs=$(ande-dirs)
+SET_DEFS+= pro 
+SET_DESC_pro=$(SET_DESC_ande)
+kernel_docs-pro = $(kernel_docs-ande)
+workload_docs-pro = $(workload_docs-ande) 
+DOCFILES-pro = docs/html/pro docs/html/char-pro docs/index.html docs/CoreMark-PRO_license.pdf readme.html $(DOCFILES_base)
+TAGBASE-pro = $(TAGBASE-ande)
+
+CoremarkPRO: certify-list-pro mark

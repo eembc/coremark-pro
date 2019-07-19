@@ -1,0 +1,15 @@
+File: Linear algebra
+Description:
+This benchmark solves linear equations.
+
+Application:
+Part of the FPMark floating point suite.
+
+Detailed Description:
+The solution is obtained by Gaussian elimination with partial pivoting, 
+and the implementation is derived from linpack.
+
+Verification:
+Verification is done based on IEEE-compliant run of ICC on a 64b linux machine with optimizations disabled, 
+-fp-model precise -no-fast-transcendentals.
+

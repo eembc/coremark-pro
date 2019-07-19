@@ -1,0 +1,138 @@
+multibench_ex-kernels = \
+	empty \
+	huffde \
+	networking/ippktcheck \
+	networking/ipres \
+	networking/tcp \
+	md5 \
+	oa/rotatev2 \
+	filters_v2/rgbcmyk03 filters_v2/common \
+	video/x264 \
+	video/mp2decode \
+	video/libmpeg \
+	automotive/idctrn01/*.[ch] automotive/idctrn01/Makefile 
+
+multibench_ex-data = \
+	libppm/sea-acorn.ppm \
+	libppm/sea-acorn-mini.ppm \
+	libppm/Rose256.ppm \
+	libppm/Mandrake.ppm \
+	libpgm/barn.pgm \
+	libpgm/DragonFly.pgm \
+	libpgm/Rose256.pgm \
+	video/x264data \
+	automotive/idctrn01/data*/data4M \
+	automotive/idctrn01/data*/data1 
+
+multibench_ex-contexts = \
+	64M-check-reassembly \
+	64M-check-reassembly-tcp \
+	64M-check-reassembly-tcp-cmykw2-rotatew2 \
+	64M-check-reassembly-tcp-h264w2 \
+	64M-cmykw2 \
+	64M-cmykw2-rotatew2 \
+	64M-rotatew2 \
+	64M-tcp-mixed \
+	64M-x264-1worker \
+	64M-x264-2workers \
+	64M-x264-4workers \
+	64M-x264-8workers \
+	empty-wld \
+	huffde-all \
+	ippktcheck-64M \
+	ippktcheck-64M-1Worker \
+	ippktcheck-64M-2Worker \
+	ippktcheck-8x4M-1Worker \
+	ippktcheck-8x4M-4Worker \
+	ipres-100M10worker \
+	ipres-100M1worker \
+	ipres-100M2worker \
+	ipres-100M4worker \
+	ipres-6M1worker \
+	ipres-6M4worker \
+	ipres-72M \
+	ipres-72M1worker \
+	ipres-72M2worker \
+	md5-128M16worker \
+	md5-128M1worker \
+	md5-128M2worker \
+	md5-128M4worker \
+	md5-1M16worker \
+	md5-1M1worker \
+	md5-1M2worker \
+	md5-1M4worker \
+	md5-32M \
+	md5-32M16worker \
+	md5-32M1worker \
+	md5-32M2worker \
+	md5-32M4worker \
+	mp2decode1 \
+	mp2decode2 \
+	mpeg2-90Mout-1worker \
+	mpeg2-90Mout-2workers \
+	mpeg2-90Mout-4workers \
+	mpeg2-90Mout-8workers \
+	mpeg2-base \
+	rgbcmyk-12M2workers \
+	rgbcmyk-5x12M \
+	rgbcmyk-5x12M1workers \
+	rgbcmyk-5x12M2workers \
+	rgbcmyk-5x12M4workers \
+	rgbcmyk-5x12M8workers \
+	rotate-16x4Ms1 \
+	rotate-16x4Ms1w1 \
+	rotate-16x4Ms1w2 \
+	rotate-16x4Ms1w32 \
+	rotate-16x4Ms1w4 \
+	rotate-16x4Ms1w8 \
+	rotate-16x4Ms32 \
+	rotate-16x4Ms32w1 \
+	rotate-16x4Ms32w2 \
+	rotate-16x4Ms32w4 \
+	rotate-16x4Ms32w8 \
+	rotate-16x4Ms4w1 \
+	rotate-16x4Ms4w2 \
+	rotate-16x4Ms4w4 \
+	rotate-16x4Ms4w8 \
+	rotate-16x4Ms64 \
+	rotate-16x4Ms64w1 \
+	rotate-34k-180deg \
+	rotate-34k-270deg \
+	rotate-34k-90deg \
+	rotate-34kX128w1 \
+	rotate-34kX16-90deg \
+	rotate-34kX512-90deg \
+	rotate-4M-180deg \
+	rotate-4M-270deg \
+	rotate-4M-90deg \
+	rotate-4Ms32 \
+	rotate-4Ms32w1 \
+	rotate-4Ms4 \
+	rotate-4Ms4w1 \
+	rotate-520k-180deg \
+	rotate-520k-270deg \
+	rotate-520k-90deg \
+	rotate-520kX16-90deg \
+	rotate-color1Mp \
+	rotate-color1Mpw1 \
+	rotate-color-4M-90deg \
+	rotate-color-4M-90degw1 \
+	tcpbase \
+	x264-4M \
+	x264-4Mw1 \
+	x264-64M \
+	x264-90M-1worker \
+	x264-90M-2workers \
+	x264-90M-4workers \
+	x264-base 
+
+multibench_ex =	$(multibench_ex-workers) $(multibench_ex-contexts)
+	
+multibench_ex-dirs = $(addprefix benchmarks/,$(multibench_ex-kernels)) $(addprefix benchmarks/,$(multibench_ex-data)) $(addprefix workloads/,$(multibench_ex)) 
+
+multibench_ex-image = $(filter rotate% rgbcmyk%,$(multibench_ex))
+multibench_ex-net = $(filter md5% ipres%,$(multibench_ex))
+multibench_ex-h264 = $(filter 64M-x264%,$(multibench_ex))
+
+SET_DEFS+= multibench_ex 
+SET_DESC_multibench_ex="MultiBench V1.1 All Workloads (mini1e + RC1)"

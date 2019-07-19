@@ -1,0 +1,56 @@
+RC1-kernels = \
+	empty \
+	networking/ippktcheck \
+	networking/ipres \
+	networking/tcp \
+	md5 \
+	oa/rotatev2 \
+	filters_v2/rgbcmyk03 filters_v2/common \
+	video/x264 
+
+RC1-data = \
+	libppm libpgm \
+	video/x264data
+
+RC1-workers = \
+	ippktcheck-64M \
+	ipres-72M \
+	md5-32M \
+	rgbcmyk-5x12M \
+	rotate-16x4Ms1 \
+	rotate-16x4Ms32 \
+	rotate-16x4Ms64 \
+	rotate-color-4M-90deg \
+	x264-64M 
+
+RC1-contexts =  \
+	empty-wld \
+	64M-check-reassembly \
+	64M-check-reassembly-tcp \
+	64M-check-reassembly-tcp-cmykw2-rotatew2 \
+	64M-check-reassembly-tcp-h264w2 \
+	64M-cmykw2-rotatew2 \
+	64M-rotatew2 \
+	64M-cmykw2 \
+	64M-tcp-mixed \
+	rgbcmyk-5x12M1workers \
+	ipres-72M1worker \
+	ippktcheck-64M-1Worker \
+	rotate-color-4M-90degw1 \
+	md5-32M1worker \
+	rotate-34kX512-90deg \
+	rotate-16x4Ms1w1 \
+	rotate-16x4Ms32w1 \
+	rotate-16x4Ms64w1 \
+	64M-x264-1worker 
+
+RC1 = $(RC1-workers) $(RC1-contexts)
+
+RC1-dirs = $(addprefix benchmarks/,$(RC1-kernels)) $(addprefix benchmarks/,$(RC1-data)) $(addprefix workloads/,$(RC1)) 
+
+RC1-image = $(filter rotate% rgbcmyk%,$(RC1))
+RC1-net = $(filter md5% ipres%,$(RC1))
+RC1-h264 = $(filter 64M-x264%,$(RC1))
+
+SET_DEFS+= RC1 
+SET_DESC_RC1=MultiBench V1 workloads, initial full list (not official release)

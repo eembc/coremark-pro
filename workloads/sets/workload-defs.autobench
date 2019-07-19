@@ -1,0 +1,41 @@
+autobench-kernels = \
+	*01/*.[ch] *01/Makefile 
+
+autobench-data = \
+	*01/data*/{golden.,}data4K.csv* \
+	*01/data*/{golden.,}data4M.csv* 
+
+autobench-workers = 
+
+autobench-contexts-4K =  \
+	bitmnp-rspeed-puwmod-4K \
+	matrix-tblook-4K \
+	puwmod-rspeed-4K \
+	rspeed-idctrn-canrdr-4K \
+	rspeed-idctrn-iirflt-4K \
+	ttsprk-a2time-matrix-4K \
+	ttsprk-a2time-pntrch-4K \
+	ttsprk-a2time-pntrch-aifirf-4K \
+	ttsprk-a2time-pntrch-idctrn-4K \
+	ttsprk-a2time-pntrch-tblook-4K 
+
+autobench-contexts-4M =  \
+	bitmnp-rspeed-puwmod-4M \
+	matrix-tblook-4M \
+	puwmod-rspeed-4M \
+	rspeed-idctrn-canrdr-4M \
+	rspeed-idctrn-iirflt-4M \
+	ttsprk-a2time-matrix-4M \
+	ttsprk-a2time-pntrch-4M \
+	ttsprk-a2time-pntrch-aifirf-4M \
+	ttsprk-a2time-pntrch-idctrn-4M \
+	ttsprk-a2time-pntrch-tblook-4M 
+
+autobench-contexts = $(autobench-contexts-4K) $(autobench-contexts-4M) 
+
+autobench =	$(autobench-workers) $(autobench-contexts)
+	
+autobench-dirs = $(addprefix benchmarks/automotive/,$(autobench-kernels)) $(addprefix benchmarks/automotive/,$(autobench-data)) $(addprefix workloads/,$(autobench)) 
+
+SET_DEFS+= autobench 
+SET_DESC_autobench=Workloads using autobench kernels as approved by the board in 2012

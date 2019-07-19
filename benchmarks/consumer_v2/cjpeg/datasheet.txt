@@ -1,0 +1,32 @@
+File: CJPEG
+	Compress a jpeg file
+
+Description:
+The benchmark implements the jpeg compression algorithm.
+
+Application:
+Imaging.
+
+Detailed Description:
+The JPEG compression benchmark takes an image and encodes it to produce 
+a compressed representation. The JPEG image compression standard 
+provides for a wide range of options in the way that images are compressed. 
+The benchmark uses the baseline subset of image compression “tools” with 
+parameters that would generally be regarded as typical. 
+
+There are two main phases of the benchmark, contributing roughly equally to the processing load.
+
+1 - Color space conversion.
+Since the human eye is more sensitive to the luma of the signal then to color, 
+the input is converted to a YUV color space. Different compression factors can then be used
+on each dimension. The color dimensions are also downsampled.
+
+2 - Compression.
+Compression is performed on 8x8 blocks using DCT to transform the input to frequency domain first.
+Again relying on the physical properties of the human eye that is less sensitive to high frequency changes,
+quantizing the output will form long sequences of zero value in the high frequency range.
+The resulting blocks are then encoded using huffman encoding.
+
+Verification:
+Output is verified against known reference. Results must be bit exact.
+
