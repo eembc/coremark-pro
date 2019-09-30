@@ -2,7 +2,48 @@
 
 CoreMark®-PRO is a comprehensive, advanced processor benchmark that works with and enhances the market-proven industry-standard EEMBC CoreMark® benchmark. While CoreMark stresses the CPU pipeline, CoreMark-PRO tests the entire processor, adding comprehensive support for multicore technology, a combination of integer and floating-point workloads, and data sets for utilizing larger memory subsystems. Together, EEMBC CoreMark and CoreMark-PRO provide a standard benchmark covering the spectrum from low-end microcontrollers to high-performance computing processors.
 
-The EEMBC CoreMark-PRO benchmark contains five prevalent integer workloads and four popular floating-point workloads. The integer workloads include JPEG compression, ZIP compression, an XML parser, the SHA-256 Secure Hash Algorithm, and a more memory-intensive version of the original CoreMark. The floating-point workloads include a fast Fourier transform (FFT), a linear algebra routine derived from LINPACK, a greatly improved version of the Livermore loops benchmark, and a neural net algorithm to evaluate patterns.
+The EEMBC CoreMark-PRO benchmark contains five prevalent integer workloads and four popular floating-point workloads. 
+
+The integer workloads include:
+
+* JPEG compression
+* ZIP compression
+* XML parsing
+* SHA-256 Secure Hash Algorithm
+* A more memory-intensive version of the original CoreMark
+
+The floating-point workloads include:
+
+* Radix-2 Fast Fourier Transform (FFT)
+* Gaussian elimination with partial pivoting derived from LINPACK
+* A simple neural-net
+* A greatly improved version of the Livermore loops benchmark using the following 24 FORTRAN kernels converted to C (all of these reported as a single score of the `loops.c` workload). The standard Livermore loops include:
+  *   Kernel 1 -- hydro fragment
+  *   Kernel 2 -- ICCG excerpt (Incomplete Cholesky Conjugate Gradient)
+  *   Kernel 3 -- inner product
+  *   Kernel 4 -- banded linear equations
+  *   Kernel 5 -- tri-diagonal elimination, below diagonal
+  *   Kernel 6 -- general linear recurrence equations
+  *   Kernel 7 -- equation of state fragment
+  *   Kernel 8 -- ADI integration
+  *   Kernel 9 -- integrate predictors
+  *   Kernel 10 -- difference predictors
+  *   Kernel 11 -- first sum
+  *   Kernel 12 -- first difference
+  *   Kernel 13 -- 2-D PIC (Particle In Cell)
+  *   Kernel 14 -- 1-D PIC (pticle In Cell)
+  *   Kernel 15 -- Casual Fortran.
+  *   Kernel 16 -- Monte Carlo search loop
+  *   Kernel 17 -- implicit, conditional computation
+  *   Kernel 18 -- 2-D explicit hydrodynamics fragment
+  *   Kernel 19 -- general linear recurrence equations
+  *   Kernel 20 -- Discrete ordinates transport, conditional recurrence on xx
+  *   Kernel 21 -- matrix*matrix product
+  *   Kernel 22 -- Planckian distribution
+  *   Kernel 23 -- 2-D implicit hydrodynamics fragment
+  *   Kernel 24 -- find location of first minimum in array
+
+The CoreMark-PRO score is a weighted geometric mean of each workload, as describe on page 12 of the provided PDF document.
 
 # Basic Overview
 
@@ -85,6 +126,18 @@ What is and is not allowed.
 
 ## NOT ALLOWED
 1. You may not change the source file under benchmarks or workloads folders.
+
+# Baremetal and Other Ports
+
+The MITH hardare abstraction layer is defined in `mith/al/src`. These files contain any low-level functions needed by the benchmark. The MITH framework is used for a number of benchmarks, so not all options are relevant to or used by CoreMark-PRO.
+
+The provided implementaiton was tested on 32- and 64-bit Linux distributions, as well as Cygwin. Since the datasets are loaded implicitly as C-structures, file I/O is not used. The only major modification likely needed for an embedded port is how `pthreads` are implemented. Choices are:
+
+1. Provide a POSIX thread library
+2. Switch to single-thread mode by using the reference `al_single.c` instead of `al_smp.c`
+3. Implement the functions `al_smp.c` using the target platform's threading SDK
+
+There's no standard flash downloader or response extractor included because every tool chain or IDE behaves differently in this regard. One easy method is to load each compiled firmware image through an IDE debugger and extract the results either by redirecting the `th_printf` function, or simply reading the IDE debugger output assuming `vsprintf` is redirected to the IDE or console via the debuggger link. The computation of the CoreMark-PRO score is described on page 12 of the provided PDF user's guide.
 
 # Submitting Results
 
