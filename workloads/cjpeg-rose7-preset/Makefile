@@ -2,7 +2,7 @@ MYNAME = cjpeg-rose7-preset
 include common.mak
 
 
-export SELECT_PRESET_ID=0
+export SELECT_PRESET_ID=1
 export SELECT_PRESET_NAME=Rose256_bmp
 
 ifndef SELECT_PRESET_ID
