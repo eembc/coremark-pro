@@ -50,7 +50,7 @@ OEXT = .o
 AS		= $(TOOLS)/bin/as
 
 # Variable: CC
-#	name of the linker
+#	name of the linker, linking is done using gcc.
 LD		= $(TOOLS)/bin/gcc
 EXEOUT	= -o
 EXE		= .exe

@@ -35,7 +35,7 @@ CDEFN	= -D
 OEXT = .o
 
 AS		= $(TOOLS)/bin/$(TPREF)as
-
+# Linking is done using gcc.
 LD		= $(TOOLS)/bin/$(TPREF)gcc
 EXEOUT	= -o 
 EXE		= .exe
