@@ -1,0 +1,119 @@
+# MITH cross-compiler toolchain config for GCC Arm (arm-none-eabi)
+# Copyright (c) EEMBC, All Rights Reserved.
+
+TOOLS	= /usr/local
+CC		= $(TOOLS)/bin/arm-none-eabi-gcc
+AS		= $(TOOLS)/bin/arm-none-eabi-as
+LD		= $(TOOLS)/bin/arm-none-eabi-gcc
+AR		= $(TOOLS)/bin/arm-none-eabi-ar
+SIZE	= $(TOOLS)/bin/arm-none-eabi-size
+INCLUDE	= $(TOOLS)/include
+
+OBJOUT	= -o
+COBJT	= -c
+CINCD	= -I
+CDEFN	= -D
+OEXT	= .o
+EXEOUT	= -o
+EXE		= .exe
+
+LIBTYPE	= .a
+LIBOUT	= 
+
+ARMFLAGS = -mcpu=cortex-m3
+
+COMPILER_FLAGS = -g -O2 $(CDEFN)NDEBUG $(CDEFN)HOST_EXAMPLE_CODE=1 -std=gnu99 $(ARMFLAGS)
+COMPILER_NOOPT = -O0 -g $(CDEFN)NDEBUG $(CDEFN)HOST_EXAMPLE_CODE=1 $(ARMFLAGS)
+COMPILER_DEBUG = -O0 -g $(CDEFN)HOST_EXAMPLE_CODE=1 -DBMDEBUG=1 -DTHDEBUG=1 $(ARMFLAGS)
+
+WARNING_OPTIONS = -Wall -Wno-long-long -fno-asm -fsigned-char
+
+COMPILER_INCLUDES =
+
+COMPILER_DEFINES += HAVE_SYS_STAT_H=1
+COMPILER_DEIFNES += USE_NATIVE_PTHREAD=1
+COMPILER_DEIFNES += GCC_INLINE_MACRO=1
+COMPILER_DEIFNES += NO_RESTRICT_QUALIFIER=1
+COMPILER_DEFINES += EE_SIZEOF_LONG=8
+COMPILER_DEFINES += EE_SIZEOF_PTR=8
+COMPILER_DEFINES += EE_PTR_ALIGN=8
+COMPILER_DEFINES += HAVE_PTHREAD=0
+COMPILER_DEFINES += USE_SINGLE_CONTEXT=1
+COMPILER_DEFINES += NO_ALIGNED_ALLOC=1
+COMPILER_DEFINES += USE_CLOCK=1
+
+COMPILER_DEFS = $(addprefix $(CDEFN),$(COMPILER_DEFINES))
+PLATFORM_DEFS = $(addprefix $(CDEFN),$(PLATFORM_DEFINES))
+
+ASSEMBLER_FLAGS	=
+ASSEMBLER_INCLUDES =
+
+LINKER_FLAGS +=
+LINKER_INCLUDES	=
+LINKER_LAST += -lm -lc -lrdimon
+
+ARFLAGS = $(LIBRARY_FLAGS)
+
+LIBRARY = $(AR) $(ARFLAGS)
+LIBRARY_FLAGS = scr
+LIBRARY_LAST =
+
+SIZE_FLAGS =
+
+ALL_TARGETS	= $(EXTRA_TARGETS_S) mkdir targets run results $(EXTRA_TARGETS_F)
+
+ifndef (DO_PROFILE)
+	DO_PROFILE = no
+endif
+
+ifndef (DO_VALGRIND)
+	DO_VALGRIND = no
+endif
+
+ifeq ($(DO_PROFILE),yes)
+	# Make PG overrides
+	DIR_BUILD	= $(DIR_TARGET)/obj-pg
+	DIR_IMG		= $(DIR_TARGET)/bin-pg
+	DIR_LOG		= $(DIR_TARGET)/logs-pg
+	COMPILER_FLAGS += -pg
+	LINKER_FLAGS += -pg
+else
+	ifeq ($(DO_VALGRIND),yes)
+		DIR_LOG	= $(DIR_TARGET)/logs-vg
+		COMPILER_FLAGS += -g
+	endif
+endif
+
+ifeq ($(TRAINING),yes)
+	COMPILER_FLAGS += -DTRAINING=1 -fprofile-generate
+	LINKER_FLAGS += -fprofile-generate
+endif
+
+ifeq ($(TRAINING_UNIQUE),yes)
+	COMPILER_FLAGS += -DTRAINING=1 -DTRAINING_UNIQUE=1 -fprofile-generate
+	LINKER_FLAGS += -fprofile-generate
+endif
+
+ifeq ($(USEPGO),yes)
+	COMPILER_FLAGS += -fprofile-use
+	LINKER_FLAGS += -fprofile-use
+endif
+
+ifeq ($(DO_MICA),yes)
+	COMPILER_DEFINES += DO_MICA=1
+endif
+
+ifdef DDB
+	CFLAGS = $(COMPILER_DEBUG) $(COMPILER_DEFS) $(PLATFORM_DEFS)
+else
+	ifdef DDN
+		CFLAGS = $(COMPILER_NOOPT) $(COMPILER_DEFS) $(PLATFORM_DEFS)
+	else
+		CFLAGS = $(COMPILER_FLAGS) $(COMPILER_DEFS) $(PLATFORM_DEFS)
+	endif
+endif
+
+ifdef DDT
+	CFLAGS += -DTHDEBUG=1
+endif
+

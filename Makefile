@@ -28,6 +28,9 @@ ifndef TARGET
 			endif
 		endif
 	endif
+	ifneq (,$(findstring Darwin,$(UNAME)))
+		DEFAULT_TARGET=linux64
+	endif
 else
 	DEFAULT_TARGET=$(TARGET)
 endif

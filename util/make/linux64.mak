@@ -70,4 +70,4 @@ CMD_SEP=
 #	- invoking a special command line tool to transfer the data
 #	- copy (for file systems that do not support links)
 #	- link (for file systems where a simple symbolic link will work)
-COPY_DATA=cp -Ru --remove-destination 
+COPY_DATA=cp -fR
