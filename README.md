@@ -103,6 +103,22 @@ As stated above, each workload compiles to a single binary. The workloads in the
 
 NOTE: In CoreMark-PRO, the mapping is 1:1, each workload invokes one kernel. Other MITH-based benchmarks from EEMBC, such as AutoBench 2.0, multiple kernels are arranged in different configurations in each workload.
 
+## Memory Usage
+
+The following metrics were captured under Ubuntu 20.04 running on an Intel(R) Core(TM) i5-1035G4 CPU using GCC 9.3.0 (with -O2). The static footprint was taken with `size` and the dynamic peak with `valgrind --stats=yes --profile-heap=yes --tool=massif --stacks=yes --time-unit=B` subtool. Values are in bytes.
+
+| Component                     |      text |     data |      bss |       dec | massif peak B |
+|-------------------------------|----------:|---------:|---------:|----------:|--------------:|
+| cjpeg-rose7-preset.exe        |   112,292 |  268,576 |      208 |   381,076 |       141,488 |
+| core.exe                      |    70,356 |    2,240 |    2,448 |    75,044 |        12,496 |
+| linear_alg-mid-100x100-sp.exe |    75,277 |    3,112 |    1,424 |    79,813 |        67,656 |
+| loops-all-mid-10k-sp.exe      |    91,391 |    4,696 |    3,664 |    99,751 |     3,427,184 |
+| nnet_test.exe                 |    73,739 |    3,568 |   40,272 |   117,579 |        50,528 |
+| parser-125k.exe               |    90,415 |    2,272 |      208 |    92,895 |     1,043,032 |
+| radix2-big-64k.exe            | 1,449,387 |    1,904 |      688 | 1,451,979 |     1,580,504 |
+| sha-test.exe                  |    80,717 |    2,184 |      208 |    83,109 |     1,052,272 |
+| zip-test.exe                  |   135,245 |    2,776 |      208 |   138,229 |     3,420,864 |
+
 # Documentation
 
 Please refer to the PDF user guide located in the `docs` folder of this repository for more details.
