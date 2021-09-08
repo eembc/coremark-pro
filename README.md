@@ -155,6 +155,27 @@ The provided implementaiton was tested on 32- and 64-bit Linux distributions, as
 
 There's no standard flash downloader or response extractor included because every tool chain or IDE behaves differently in this regard. One easy method is to load each compiled firmware image through an IDE debugger and extract the results either by redirecting the `th_printf` function, or simply reading the IDE debugger output assuming `vsprintf` is redirected to the IDE or console via the debuggger link. The computation of the CoreMark-PRO score is described on page 12 of the provided PDF user's guide.
 
+# Computing the Overall Score
+
+The final score is a geometric mean of the components divided by a reference platform score and scaled. If CoreMark-PRO is run on the host system, a PERL script will automatically perform this computation. If run on a remote target, it must be done manually. First collect the iterations-per-second for each of the components. Then divide each component by the reference score shown below, then multiply each term by the scale factor, and take the geometric mean of the resulting values. Finally multiply by 1000.
+
+
+| Component                     | Scale Factor | Reference Score |
+|-------------------------------|-------------:|:---------------:|
+| cjpeg-rose7-preset.exe        |            1 |         40.3438 |
+| core.exe                      |        10000 |            2855 |
+| linear_alg-mid-100x100-sp.exe |            1 |         38.5624 |
+| loops-all-mid-10k-sp.exe      |            1 |         0.87959 |
+| nnet_test.exe                 |            1 |         1.45853 |
+| parser-125k.exe               |            1 |         4.81116 |
+| radix2-big-64k.exe            |            1 |         99.6587 |
+| sha-test.exe                  |            1 |         48.5201 |
+| zip-test.exe                  |            1 |         21.3618 |
+
+Final Score = GeoMean(s0/r0 * x0, s1/r1 * x1, ..., sN/rN * xN) * 1000
+
+Where *sN*, *rN* and *xN* refer to the current score, reference score and scale factor, respectively, for each of the *N* components.
+
 # Submitting Results
 
 CoreMark-PRO results can be submitted on the web. Open a web browser and go to the [submission page](https://www.eembc.org/coremark-pro/submit.php). After registering an account you may enter a score.
