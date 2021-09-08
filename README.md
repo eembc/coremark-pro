@@ -161,7 +161,7 @@ The final score is a geometric mean of the components divided by a reference pla
 
 
 | Component                     | Scale Factor | Reference Score |
-|-------------------------------|-------------:|:---------------:|
+|-------------------------------|-------------:|----------------:|
 | cjpeg-rose7-preset.exe        |            1 |         40.3438 |
 | core.exe                      |        10000 |            2855 |
 | linear_alg-mid-100x100-sp.exe |            1 |         38.5624 |
