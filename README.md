@@ -155,6 +155,30 @@ The provided implementaiton was tested on 32- and 64-bit Linux distributions, as
 
 There's no standard flash downloader or response extractor included because every tool chain or IDE behaves differently in this regard. One easy method is to load each compiled firmware image through an IDE debugger and extract the results either by redirecting the `th_printf` function, or simply reading the IDE debugger output assuming `vsprintf` is redirected to the IDE or console via the debuggger link. The computation of the CoreMark-PRO score is described on page 12 of the provided PDF user's guide.
 
+## Defines
+
+The makefiles automate macro setting and data set inclusion. When not using the makefiles, it can be tricky to determine the proper macro definitions; be sure to set the following macros and use these datasets:
+
+| Component                     | Macros                                               | File or directory to include |
+|-------------------------------|-----------------------------------------------------:|---------------------:|
+| cjpeg-rose7-preset.exe        | SELECT_PRESET_ID=1, USE_PRESET                       | `Rose256_bmp.c`      |
+| core.exe                      |                                                      |                      |
+| linear_alg-mid-100x100-sp.exe | USE_FP32=1                                           | `inputs_fp32.c`      |
+| loops-all-mid-10k-sp.exe      | USE_FP32=1                                           | `fp_loops_refsp/`    |
+| nnet_test.exe                 | USE_FP64=1                                           | `fp_nnet_ref/`       |
+| parser-125k.exe               |                                                      |                      |
+| radix2-big-64k.exe            | USE_FP64=1                                           | `fp_fft_radix2_ref/` |
+| sha-test.exe                  |                                                      |                      |
+| zip-test.exe                  | MITH_MEMORY_ONLY_VERSION, ZLIB_COMPAT_ALL, ZLIB_ANSI |                      |
+
+## Argv & Argc
+
+Each workload defines a `main()` that takes `argc` and `argv`. In order to run the performance measurement, the benchmark requires the input argument "-v0" (turn off default validation mode), and to follow the run rules, iterations might need to be changed with the "-i" option. Since these options are provided via `argv`, this may cause problems. If your debugger allows semihosting, you can provide these options through an argument string. If your compiler can rename the entrypoint from `main()` to something else, you can create a wrapper that calls the workload `main()` with an argument string, e.g. `char *argv[] = { "-v0", "-i100" }; ...`. If neither options are available, you will need to alter the workload `main()` function to be `main(void)` and define your own `argc` and `argv` immediately prior to the call to `al_main()`.
+
+## The adaptation layer
+
+You are allowed to alter `th_al.c`. It is expected that the platform startup and init code will need to go in `al_main()`, as well as porting the clock mechanism defined by the `al_signal_*()` functions. Often these are simply replaced with an interrupt timer (rather than an RTC) at 1ms resolution. If the timer is not 1ms, you will need to set the CLOCKS_PER_SEC defines in `th_al.c`.
+
 # Computing the Overall Score
 
 The final score is a geometric mean of the components divided by a reference platform score and scaled. If CoreMark-PRO is run on the host system, a PERL script will automatically perform this computation. If run on a remote target, it must be done manually. First collect the iterations-per-second for each of the components. Then divide each component by the reference score shown below, then multiply each term by the scale factor, and take the geometric mean of the resulting values. Finally multiply by 1000.
