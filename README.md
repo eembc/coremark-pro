@@ -163,12 +163,12 @@ The makefiles automate macro setting and data set inclusion. When not using the 
 |-------------------------------|------------------------------------------------------|----------------------|
 | cjpeg-rose7-preset            | SELECT_PRESET_ID=1, USE_PRESET                       | `consumer_v2/cjpeg/*.c`<br />`consumer_v2/cjpeg/data/Rose256_bmp.c` |
 | core                          |                                                      | `core/core_*.c`      |
-| linear_alg-mid-100x100-sp     | USE_FP32=1                                           | `fp/linkpack/ref/inputs_f32.c`      |
-| loops-all-mid-10k-sp          | USE_FP32=1                                           | `fp/loop/ref-sp/*.c`    |
-| nnet_test                     | USE_FP64=1                                           | `fp/nnet/ref/*.c`       |
+| linear_alg-mid-100x100-sp     | USE_FP32=1                                           | `fp/linpack/linpack.c`<br />`fp/linpack/ref/inputs_f32.c`      |
+| loops-all-mid-10k-sp          | USE_FP32=1                                           | `fp/loops/loops.c`<br />`fp/loops/ref-sp/*.c`    |
+| nnet_test                     | USE_FP64=1                                           | `fp/nnet/nnet.c`<br />`fp/nnet/ref/*.c`       |
 | parser-125k                   |                                                      | `darkmark/parser/*.c`                    |
-| radix2-big-64k                | USE_FP64=1                                           | `fp/fft_radix2/ref/*.c` |
-| sha-test                      |                                                      | `darkmark/sha/*.c       |
+| radix2-big-64k                | USE_FP64=1                                           | `fp/fft_radix2/fft_radix2.c`<br />`fp/fft_radix2/ref/*.c` |
+| sha-test                      |                                                      | `darkmark/sha/*.c`       |
 | zip-test                      | MITH_MEMORY_ONLY_VERSION, ZLIB_COMPAT_ALL, ZLIB_ANSI | `darkmark/zip/zip_darkmark.c`<br />`darkmark/zip/zlib-1.2.8/*.c` but exclude `gzread.c` and `gzwrite.c`.|
 
  
