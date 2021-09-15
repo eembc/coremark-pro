@@ -160,17 +160,18 @@ There's no standard flash downloader or response extractor included because ever
 The makefiles automate macro setting and data set inclusion. When not using the makefiles, it can be tricky to determine the proper macro definitions; be sure to set the following macros and use these datasets:
 
 | Component                     | Macros                                               | File or directory to include |
-|-------------------------------|-----------------------------------------------------:|---------------------:|
-| cjpeg-rose7-preset.exe        | SELECT_PRESET_ID=1, USE_PRESET                       | `Rose256_bmp.c`      |
-| core.exe                      |                                                      |                      |
-| linear_alg-mid-100x100-sp.exe | USE_FP32=1                                           | `inputs_fp32.c`      |
-| loops-all-mid-10k-sp.exe      | USE_FP32=1                                           | `fp_loops_refsp/`    |
-| nnet_test.exe                 | USE_FP64=1                                           | `fp_nnet_ref/`       |
-| parser-125k.exe               |                                                      |                      |
-| radix2-big-64k.exe            | USE_FP64=1                                           | `fp_fft_radix2_ref/` |
-| sha-test.exe                  |                                                      |                      |
-| zip-test.exe                  | MITH_MEMORY_ONLY_VERSION, ZLIB_COMPAT_ALL, ZLIB_ANSI |                      |
+|-------------------------------|------------------------------------------------------|----------------------|
+| cjpeg-rose7-preset            | SELECT_PRESET_ID=1, USE_PRESET                       | `consumer_v2/cjpeg/*.c`<br />`consumer_v2/cjpeg/data/Rose256_bmp.c` |
+| core                          |                                                      | `core/core_*.c`      |
+| linear_alg-mid-100x100-sp     | USE_FP32=1                                           | `fp/linkpack/ref/inputs_f32.c`      |
+| loops-all-mid-10k-sp          | USE_FP32=1                                           | `fp/loop/ref-sp/*.c`    |
+| nnet_test                     | USE_FP64=1                                           | `fp/nnet/ref/*.c`       |
+| parser-125k                   |                                                      | `darkmark/parser/*.c`                    |
+| radix2-big-64k                | USE_FP64=1                                           | `fp/fft_radix2/ref/*.c` |
+| sha-test                      |                                                      | `darkmark/sha/*.c       |
+| zip-test                      | MITH_MEMORY_ONLY_VERSION, ZLIB_COMPAT_ALL, ZLIB_ANSI | `darkmark/zip/zip_darkmark.c`<br />`darkmark/zip/zlib-1.2.8/*.c` but exclude `gzread.c` and `gzwrite.c`.|
 
+ 
 ## Argv & Argc
 
 Each workload defines a `main()` that takes `argc` and `argv`. In order to run the performance measurement, the benchmark requires the input argument "-v0" (turn off default validation mode), and to follow the run rules, iterations might need to be changed with the "-i" option. Since these options are provided via `argv`, this may cause problems. If your debugger allows semihosting, you can provide these options through an argument string. If your compiler can rename the entrypoint from `main()` to something else, you can create a wrapper that calls the workload `main()` with an argument string, e.g. `char *argv[] = { "-v0", "-i100" }; ...`. If neither options are available, you will need to alter the workload `main()` function to be `main(void)` and define your own `argc` and `argv` immediately prior to the call to `al_main()`.
