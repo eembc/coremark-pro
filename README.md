@@ -145,6 +145,8 @@ What is and is not allowed.
 
 # Baremetal and Other Ports
 
+**NEW!** A baremetal porting guide has been added to the `doc` directory of this repository.
+
 The MITH hardare abstraction layer is defined in `mith/al/src`. These files contain any low-level functions needed by the benchmark. The MITH framework is used for a number of benchmarks, so not all options are relevant to or used by CoreMark-PRO.
 
 The provided implementaiton was tested on 32- and 64-bit Linux distributions, as well as Cygwin. Since the datasets are loaded implicitly as C-structures, file I/O is not used. The only major modification likely needed for an embedded port is how `pthreads` are implemented. Choices are:
