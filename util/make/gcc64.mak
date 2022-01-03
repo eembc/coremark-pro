@@ -51,7 +51,7 @@ CDEFN	= -D
 OEXT = .o
 
 AS		= $(TOOLS)/bin/as
-
+# Linking is done using gcc.
 LD		= $(TOOLS)/bin/gcc
 EXEOUT	= -o
 EXE		= .exe
