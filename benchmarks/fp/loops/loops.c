@@ -846,7 +846,7 @@ e_fp linear_recurrence(loops_params *p) {
     for ( l=1 ; l<=loop ; l++ ) {
         for ( i=1 ; i<n ; i++ ) {
             for ( k=0 ; k<i ; k++ ) {
-                w[i] = b[k*n+i] * w[(i-k)-1];
+                w[i] += b[k*n+i] * w[(i-k)-1];
 				if (!th_isfinite(w[i])) w[i]=b[k*n+i]; /* avoid potential inf */
             }
         }
